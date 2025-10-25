@@ -3,8 +3,8 @@ const FILES_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png'
+  './icons/IMG_1501.png',
+  './icons/IMG_1502.png'
 ];
 
 // Cài đặt service worker
