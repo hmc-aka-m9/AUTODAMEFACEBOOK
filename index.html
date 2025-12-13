@@ -1,164 +1,186 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CHIẾN TRICKER</title>
-
-<!-- 🧩 PWA cấu hình -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ff0000">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CHIẾN TRICKER // CYBERPUNK UI</title>
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#00ff9c" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+:root{
+  --bg:#03060a;
+  --neon-g:#00ff9c;
+  --neon-b:#00c3ff;
+  --neon-p:#b400ff;
+  --neon-y:#ffe600;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:radial-gradient(1200px 600px at 50% 30%, #07131f 0%, #020407 60%, #000 100%);
+  color:#eaffff;
+  font-family:'Orbitron',system-ui;
+  overflow:hidden;
+}
 
-  body {
-    margin: 0;
-    font-family: 'Orbitron', sans-serif;
-    background: radial-gradient(circle at center, #0a0a0a 60%, #000 100%);
-    color: #fff;
-    text-align: center;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+/* MATRIX RAIN */
+#matrix{
+  position:fixed;inset:0;z-index:0;opacity:.35;filter:blur(.3px) saturate(140%);
+}
 
-  h1 {
-    color: #ff0000;
-    text-shadow: 0 0 15px #ff0000aa, 0 0 40px #ff4444;
-    letter-spacing: 2px;
-    font-size: 40px;
-    margin-bottom: 5px;
-  }
+/* LAYOUT */
+.app{
+  position:relative;z-index:2;
+  min-height:100%;display:grid;place-items:center;padding:24px;
+}
+.panel{
+  width:min(420px,94vw);
+  background:linear-gradient(180deg, rgba(5,12,20,.75), rgba(3,6,10,.9));
+  border:1px solid rgba(0,255,156,.35);
+  box-shadow:0 0 25px rgba(0,255,156,.25), inset 0 0 40px rgba(180,0,255,.08);
+  border-radius:18px;
+  padding:26px 28px 30px;
+  backdrop-filter:blur(6px);
+}
 
-  p {
-    color: #aaa;
-    font-size: 15px;
-    margin-bottom: 30px;
-  }
+/* TITLE */
+.title{
+  font-weight:800;letter-spacing:2px;font-size:38px;line-height:1.1;margin:0 0 6px;
+  color:var(--neon-g);
+  text-shadow:0 0 18px rgba(0,255,156,.9), 0 0 40px rgba(0,195,255,.6);
+}
+.subtitle{
+  font-family:'Share Tech Mono',monospace;
+  color:#9ad7ff;opacity:.85;margin:0 0 18px;font-size:13px
+}
 
-  .container {
-    background: rgba(20, 0, 0, 0.85);
-    border: 1px solid #ff0000;
-    box-shadow: 0 0 20px #ff000055;
-    padding: 30px 40px;
-    border-radius: 15px;
-    max-width: 380px;
-    width: 90%;
-    backdrop-filter: blur(4px);
-  }
+/* GLITCH */
+.glitch{position:relative}
+.glitch::before,.glitch::after{
+  content:attr(data-text);position:absolute;left:0;top:0;width:100%;overflow:hidden
+}
+.glitch::before{color:var(--neon-p);clip-path:inset(0 0 50% 0);animation:gl1 2.2s infinite linear alternate}
+.glitch::after{color:var(--neon-b);clip-path:inset(50% 0 0 0);animation:gl2 1.8s infinite linear alternate}
+@keyframes gl1{0%{transform:translate(0)}50%{transform:translate(1px,-1px)}100%{transform:translate(-1px,1px)}}
+@keyframes gl2{0%{transform:translate(0)}50%{transform:translate(-1px,1px)}100%{transform:translate(1px,-1px)}}
 
-  .input-group {
-    margin-bottom: 18px;
-    text-align: left;
-  }
+/* FORM */
+.group{margin-bottom:14px}
+label{
+  display:block;margin-bottom:6px;
+  font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:1px;
+  color:var(--neon-b)
+}
+input{
+  width:100%;padding:11px 12px;border-radius:10px;
+  background:#050a12;border:1px solid rgba(0,195,255,.35);
+  color:#eaffff;outline:none
+}
+input:focus{
+  border-color:var(--neon-g);
+  box-shadow:0 0 0 1px rgba(0,255,156,.6), 0 0 18px rgba(0,255,156,.35)
+}
 
-  label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #ff5555;
-  }
+/* NEON BUTTON */
+.btn{
+  --c:var(--neon-g);
+  width:100%;margin-top:10px;padding:13px 16px;border-radius:14px;
+  background:linear-gradient(90deg, rgba(0,255,156,.25), rgba(180,0,255,.25));
+  border:1px solid rgba(0,255,156,.6);color:#00140b;
+  font-weight:800;letter-spacing:2px;cursor:pointer;position:relative;overflow:hidden
+}
+.btn span{position:relative;z-index:2}
+.btn::before{
+  content:'';position:absolute;inset:-2px;filter:blur(18px);
+  background:conic-gradient(from 0deg, var(--neon-g), var(--neon-b), var(--neon-p), var(--neon-g));
+  opacity:.0;transition:.3s
+}
+.btn:hover::before{opacity:1}
+.btn:hover{box-shadow:0 0 30px rgba(0,255,156,.8)}
 
-  input {
-    width: 100%;
-    padding: 10px;
-    background: #111;
-    border: 1px solid #ff2222;
-    border-radius: 8px;
-    color: #fff;
-    font-size: 14px;
-    outline: none;
-    transition: all 0.3s ease;
-  }
+/* SCRAMBLE */
+.scramble{font-family:'Share Tech Mono',monospace}
 
-  input:focus {
-    border-color: #ff5555;
-    box-shadow: 0 0 8px #ff3333;
-  }
+/* MESSAGE */
+#msg{margin-top:16px;font-family:'Share Tech Mono',monospace;min-height:20px}
 
-  button {
-    margin-top: 10px;
-    background: linear-gradient(90deg, #ff0000, #990000);
-    border: none;
-    color: white;
-    padding: 12px 25px;
-    font-size: 16px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 700;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    box-shadow: 0 0 10px #ff000055;
-  }
-
-  button:hover {
-    background: linear-gradient(90deg, #ff3333, #cc0000);
-    box-shadow: 0 0 20px #ff0000aa;
-  }
-
-  .message {
-    margin-top: 25px;
-    font-size: 17px;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-  }
-
-  .visible {
-    opacity: 1;
-  }
+/* TYPING CURSOR */
+.cursor::after{content:'▍';margin-left:6px;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:0}}
 </style>
 </head>
 <body>
-  <h1>CHIẾN TRICKER</h1>
-  <p>Hoàng Minh Chiến Tricker | Age 17</p>
+<canvas id="matrix"></canvas>
 
-  <div class="container">
-    <div class="input-group">
-      <label>TÊN FACEBOOK CẦN DAME</label>
-      <input type="text" id="input1" placeholder="Nhập dữ liệu...">
+<div class="app">
+  <div class="panel">
+    <h1 class="title glitch" data-text="CHIẾN TRICKER"><span class="typing cursor" id="typing">CHIẾN TRICKER</span></h1>
+    <p class="subtitle">CYBERPUNK / HACKER TERMINAL UI — VISUAL DEMO</p>
+
+    <div class="group">
+      <label>TÊN FACEBOOK</label>
+      <input placeholder="Nhập dữ liệu…" />
     </div>
-
-    <div class="input-group">
-      <label style="color:#ff8888;">ID FACEBOOK CẦN DAME</label>
-      <input type="text" id="input2" placeholder="Nhập dữ liệu...">
+    <div class="group">
+      <label>ID FACEBOOK</label>
+      <input placeholder="Nhập dữ liệu…" />
     </div>
-
-    <div class="input-group">
+    <div class="group">
       <label>KEY</label>
-      <input type="text" id="input3" placeholder="Nhập dữ liệu...">
+      <input placeholder="Nhập dữ liệu…" />
     </div>
 
-    <button onclick="sendData()">START</button>
-    <div id="message" class="message"></div>
+    <button class="btn" id="start"><span class="scramble" data-text="START">START</span></button>
+    <div id="msg"></div>
   </div>
+</div>
 
-  <script>
-    function sendData() {
-      const msg = document.getElementById('message');
-      msg.textContent = "ĐANG KIỂM TRA KEY...";
-      msg.style.color = "#ffaa00";
-      msg.classList.add('visible');
+<script>
+/* MATRIX RAIN */
+const c=document.getElementById('matrix'),x=c.getContext('2d');
+let w,h,cols,drops;
+function resize(){w=c.width=innerWidth;h=c.height=innerHeight;cols=Math.floor(w/16);drops=Array(cols).fill(1)}
+window.onresize=resize;resize();
+const chars='01アカサタナハマヤラワABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*';
+function rain(){
+  x.fillStyle='rgba(0,0,0,0.08)';x.fillRect(0,0,w,h);
+  for(let i=0;i<drops.length;i++){
+    const t=chars[Math.floor(Math.random()*chars.length)];
+    x.fillStyle=`hsl(${120+Math.random()*120},100%,60%)`;
+    x.fillText(t,i*16,drops[i]*16);
+    if(drops[i]*16>h && Math.random()>0.975) drops[i]=0;
+    drops[i]++;
+  }
+}
+setInterval(rain,50);
 
-      setTimeout(() => {
-        msg.textContent = "ĐANG BẮT ĐẦU TỐ CÁO !";
-        msg.style.color = "#00ff66";
-      }, 2500);
-    }
+/* TYPING */
+const txt='CHIẾN TRICKER';const el=document.getElementById('typing');
+let i=0;el.textContent='';(function type(){if(i<=txt.length){el.textContent=txt.slice(0,i++);setTimeout(type,90)}})();
 
-    // 🧩 Service Worker cho PWA
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
-        .then(reg => console.log('SW registered', reg))
-        .catch(err => console.warn('SW register failed', err));
-    }
-  </script>
+/* SCRAMBLE */
+const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+function scramble(el){
+  let it=0;const orig=el.dataset.text;
+  const iv=setInterval(()=>{
+    el.textContent=orig.split('').map((c,idx)=>idx<it?c:letters[Math.floor(Math.random()*letters.length)]).join('');
+    if(it>=orig.length){clearInterval(iv);el.textContent=orig}
+    it+=1/3;
+  },30)
+}
+
+/* ACTION */
+const msg=document.getElementById('msg');
+const btn=document.getElementById('start');
+btn.addEventListener('mouseenter',()=>scramble(btn.querySelector('.scramble')));
+btn.addEventListener('click',()=>{
+  msg.style.color='var(--neon-y)';msg.textContent='> ĐANG KIỂM TRA KEY…';
+  setTimeout(()=>{msg.style.color='var(--neon-g)';msg.textContent='> SẴN SÀNG GIAO DIỆN.'},1800);
+});
+</script>
 </body>
 </html>
