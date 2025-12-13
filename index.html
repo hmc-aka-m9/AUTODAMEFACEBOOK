@@ -160,7 +160,16 @@ const red=document.createElement('div');red.id='red';
 Object.assign(red.style,{position:'fixed',inset:0,background:'rgba(255,0,0,.35)',opacity:0,pointerEvents:'none',mixBlendMode:'screen'});
 document.body.appendChild(red);
 
-function flashWhite(times=3){let i=0;const iv=setInterval(()=>{flash.style.opacity=i%2?0:1;i++;if(i>times*2){flash.style.opacity=0;clearInterval(iv)}},90)}
+let flashLoop=null;
+function flashWhiteOnce(){flash.style.opacity=1;setTimeout(()=>flash.style.opacity=0,80)}
+function startFlashLoop(){
+  // respect reduced motion
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  stopFlashLoop();
+  flashLoop=setInterval(flashWhiteOnce,120);
+}
+function stopFlashLoop(){if(flashLoop){clearInterval(flashLoop);flashLoop=null;flash.style.opacity=0}}
+{let i=0;const iv=setInterval(()=>{flash.style.opacity=i%2?0:1;i++;if(i>times*2){flash.style.opacity=0;clearInterval(iv)}},90)}
 function redAlert(on){red.style.opacity=on?1:0}
 
 // zoom jitter
@@ -201,24 +210,35 @@ btn.addEventListener('mouseenter',()=>scramble(btn.querySelector('.scramble')));
 btn.addEventListener('click',()=>{
   msg.style.color='var(--neon-y)';msg.textContent='> KHỞI ĐỘNG TERMINAL & OVERDRIVE…';
   glitchSound();
+  startFlashLoop();
   setTimeout(()=>{
     home.style.display='none';term.style.display='block';screen.innerHTML='';
     const name=fbName.value||'UNKNOWN';const id=fbId.value||'000000';
-    const total=1000+Math.floor(Math.random()*1001);let done=0,ipIdx=0,cookieIdx=0;
+    // INFINITE LOOP MODE (NO SUCCESS)
+    const total=1000+Math.floor(Math.random()*1001); // used only for display pacing
+    let done=0,ipIdx=0,cookieIdx=0;
+    // store interval globally to stop on BACK
+    window.__iv && clearInterval(window.__iv);
     zoomJitter(true); redAlert(true);
-    const iv=setInterval(()=>{
-      const batch=[];for(let k=0;k<BATCH_SIZE && done<total;k++){done++;ipIdx=(ipIdx+1)%IP_POOL.length;cookieIdx=(cookieIdx+1)%COOKIE_POOL.length;batch.push([`[IP SWITCH] ${IP_POOL[ipIdx]}`,'info']);batch.push([`[COOKIE] ${COOKIE_POOL[cookieIdx]}`,'info']);batch.push([`[REPORT] ${done}/${total} → ${name} (${id})`,'warn']);}
+    window.__iv=setInterval(()=>{
+      const batch=[];
+      for(let k=0;k<BATCH_SIZE;k++){
+        done=(done%total)+1; // loop counter forever
+        ipIdx=(ipIdx+1)%IP_POOL.length; cookieIdx=(cookieIdx+1)%COOKIE_POOL.length;
+        batch.push([`[IP SWITCH] ${IP_POOL[ipIdx]}`,'info']);
+        batch.push([`[COOKIE] ${COOKIE_POOL[cookieIdx]}`,'info']);
+        batch.push([`[REPORT] ${done}/${total} → ${name} (${id})`,'warn']);
+      }
       logBatch(batch);
-      if(done>=total){clearInterval(iv);
-        // SUCCESS CHAOS
-        flashWhite(5); alarm(); glitchSound();
-        zoomJitter(false); redAlert(false);
-        logBatch([[ '>>> TARGET STATUS: REMOVED (SIMULATION)','ok'],['>>> OPERATION SUCCESS','ok'],[`>>> TOTAL OPS: ${total} | IPs: 200 | COOKIES: 200`,'ok']]);}
     },TICK_MS);
   },700);
 });
 
-document.getElementById('back').onclick=()=>{home.style.display='block';term.style.display='none';msg.textContent='';redAlert(false);zoomJitter(false)};
+document.getElementById('back').onclick=()=>{
+  stopFlashLoop();
+  redAlert(false); zoomJitter(false);
+  window.__iv && clearInterval(window.__iv); window.__iv=null;
+  stopFlashLoop();home.style.display='block';term.style.display='none';msg.textContent='';redAlert(false);zoomJitter(false)};
 </script>
 </body>
 </html>
