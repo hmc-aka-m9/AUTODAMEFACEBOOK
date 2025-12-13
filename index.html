@@ -161,19 +161,7 @@ Object.assign(red.style,{position:'fixed',inset:0,background:'rgba(255,0,0,.35)'
 document.body.appendChild(red);
 
 let flashLoop=null;
-function flashWhiteOnce(){flash.style.opacity=1;setTimeout(()=>flash.style.opacity=0,80)}
-function startFlashLoop(){
-  // respect reduced motion
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  stopFlashLoop();
-  flashLoop=setInterval(flashWhiteOnce,120);
-}
-function stopFlashLoop(){if(flashLoop){clearInterval(flashLoop);flashLoop=null;flash.style.opacity=0}}
-{let i=0;const iv=setInterval(()=>{flash.style.opacity=i%2?0:1;i++;if(i>times*2){flash.style.opacity=0;clearInterval(iv)}},90)}
-function redAlert(on){red.style.opacity=on?1:0}
-
-// zoom jitter
-function zoomJitter(on){document.body.style.transition='transform .08s';if(on){document.body.classList.add('zoom')}else{document.body.classList.remove('zoom');document.body.style.transform='scale(1)'}}
+function /* flash disabled */document.body.style.transform='scale(1)'}}
 
 // audio (WebAudio, no external files)
 let ctx;function beep(freq=900,dur=0.06,type='square'){if(!ctx) ctx=new (window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();const g=ctx.createGain();o.type=type;o.frequency.value=freq;g.gain.value=0.08;o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+dur)}
