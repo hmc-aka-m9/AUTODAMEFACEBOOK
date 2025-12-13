@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CHIẾN TRICKER // CYBERPUNK TERMINAL DEMO</title>
+<title>CHIẾN TRICKER // </title>
 <link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#00ff9c" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,19 +98,19 @@ input:focus{border-color:var(--neon-g);box-shadow:0 0 0 1px rgba(0,255,156,.6), 
   <!-- HOME -->
   <div class="panel" id="home">
     <h1 class="title glitch" data-text="CHIẾN TRICKER"><span class="typing cursor" id="typing">CHIẾN TRICKER</span></h1>
-    <p class="subtitle">HMCTricker / CYBERPUNK TERMINAL • UI DEMO</p>
+    <p class="subtitle">HMCTricker / HACKER • 17 Tuổi</p>
 
     <div class="group">
-      <label>TÊN FACEBOOK (DEMO)</label>
+      <label>TÊN FACEBOOK </label>
       <input id="fbName" placeholder="Nhập dữ liệu…" />
     </div>
     <div class="group">
-      <label>ID FACEBOOK (DEMO)</label>
+      <label>ID FACEBOOK </label>
       <input id="fbId" placeholder="Nhập dữ liệu…" />
     </div>
     <div class="group">
-      <label>KEY (DEMO)</label>
-      <input placeholder="XXXX-XXXX-XXXX" />
+      <label>KEY </label>
+      <input placeholder="Nhập dữ liệu…" />
     </div>
 
     <button class="btn" id="start"><span class="scramble" data-text="START">START</span></button>
@@ -118,8 +118,7 @@ input:focus{border-color:var(--neon-g);box-shadow:0 0 0 1px rgba(0,255,156,.6), 
   </div>
 
   <!-- TERMINAL -->
-  <div class="panel" id="terminal" style="display:none">
-    <p class="subtitle">AUTO TERMINAL MODE — SIMULATION ONLY</p>
+  <div class="panel" id="terminal" style="termi">CHIẾN TRICKER - AUTO REPORT     <p class="subtitle">pp
     <div id="screen"></div>
     <button class="btn" id="back"><span>BACK TO HOME</span></button>
   </div>
@@ -146,10 +145,10 @@ const fakeIP=()=>`${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*25
 function log(t,c='info'){const d=document.createElement('div');d.className='log '+c;d.textContent=t;screen.appendChild(d);screen.scrollTop=screen.scrollHeight}
 btn.addEventListener('mouseenter',()=>scramble(btn.querySelector('.scramble')));
 btn.addEventListener('click',()=>{
-  msg.style.color='var(--neon-y)';msg.textContent='> ĐANG KHỞI TẠO TERMINAL…';
+  msg.style.color='var(--neon-y)';msg.textContent='> ĐANG TIẾN HÀNH...';
   setTimeout(()=>{
     home.style.display='none';term.style.display='block';screen.innerHTML='';
-    const name=fbName.value||'UNKNOWN';const id=fbId.value||'000000';
+    const name=fbName.value||'ĐÃ ẨN';const id=fbId.value||'ĐÃ ẨN';
     let i=0,max=10+Math.floor(Math.random()*6);
     const iv=setInterval(()=>{
       i++;
