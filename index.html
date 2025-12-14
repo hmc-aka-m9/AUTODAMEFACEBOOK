@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CHIẾN TRICKER // CYBERPUNK TERMINAL DEMO</title>
-<link rel="manifest" href="manifest.json" />
+<title>CHIẾN TRICKER // CYBERPUNK TERMINAL UI (DEMO)</title>
 <meta name="theme-color" content="#00ff9c" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +41,7 @@ body{
   padding:26px 28px 30px;
   backdrop-filter:blur(6px);
 }
-#terminal.panel{width:min(760px,96vw)}
+#terminal.panel{width:min(780px,96vw)}
 
 /* TITLE */
 .title{
@@ -83,37 +82,16 @@ input:focus{border-color:var(--neon-g);box-shadow:0 0 0 1px rgba(0,255,156,.6), 
 
 /* TERMINAL */
 #screen{margin-top:10px;height:380px;overflow:auto;background:#02060b;border:1px solid rgba(0,255,156,.45);border-radius:14px;padding:14px;font-family:'Share Tech Mono',monospace;font-size:13px}
-.log{margin-bottom:6px}
+.log{margin-bottom:6px;white-space:pre}
 .ok{color:var(--neon-g)}.warn{color:var(--neon-y)}.info{color:var(--neon-b)}
 
 /* CURSOR */
 .cursor::after{content:'▍';margin-left:6px;animation:blink 1s infinite}
 @keyframes blink{50%{opacity:0}}
 
-/* ================= INSANE FX ================= */
-/* scanlines */
+/* SCANLINES */
 body::after{content:'';position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.06) 0 1px,rgba(0,0,0,0) 1px 3px);mix-blend-mode:overlay;opacity:.25;animation:scan 6s linear infinite}
 @keyframes scan{0%{background-position:0 0}100%{background-position:0 100%}}
-
-/* chromatic aberration */
-.rgb{filter:drop-shadow(2px 0 0 var(--neon-b)) drop-shadow(-2px 0 0 var(--neon-p))}
-
-/* flicker */
-.flicker{animation:flicker .12s infinite}
-@keyframes flicker{0%,100%{opacity:1}50%{opacity:.55}}
-
-/* pulse glow */
-.pulse{animation:pulse 1.2s infinite}
-@keyframes pulse{0%{box-shadow:0 0 10px var(--neon-g)}50%{box-shadow:0 0 40px var(--neon-p),0 0 80px var(--neon-b)}100%{box-shadow:0 0 10px var(--neon-g)}}
-
-/* shake */
-.shake{animation:shake .18s infinite}
-@keyframes shake{0%{transform:translate(0)}25%{transform:translate(1px,-1px)}50%{transform:translate(-1px,1px)}75%{transform:translate(1px,1px)}100%{transform:translate(0)}}
-
-/* glow text */
-.glowText{animation:glowText .6s infinite alternate}
-@keyframes glowText{from{text-shadow:0 0 10px var(--neon-g),0 0 20px var(--neon-b)}to{text-shadow:0 0 25px var(--neon-p),0 0 60px var(--neon-b)}}
-
 </style>
 </head>
 <body>
@@ -123,20 +101,11 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;background:rep
   <!-- HOME -->
   <div class="panel" id="home">
     <h1 class="title glitch" data-text="CHIẾN TRICKER"><span class="typing cursor" id="typing">CHIẾN TRICKER</span></h1>
-    <p class="subtitle">HMCTricker / CYBERPUNK TERMINAL • UI DEMO</p>
+    <p class="subtitle">CYBERPUNK / HACKER TERMINAL — UI DEMO ONLY</p>
 
-    <div class="group">
-      <label>TÊN FACEBOOK (DEMO)</label>
-      <input id="fbName" placeholder="Nhập dữ liệu…" />
-    </div>
-    <div class="group">
-      <label>ID FACEBOOK (DEMO)</label>
-      <input id="fbId" placeholder="Nhập dữ liệu…" />
-    </div>
-    <div class="group">
-      <label>KEY (DEMO)</label>
-      <input placeholder="XXXX-XXXX-XXXX" />
-    </div>
+    <div class="group"><label>TÊN FACEBOOK (DEMO)</label><input placeholder="Nhập dữ liệu…"></div>
+    <div class="group"><label>ID FACEBOOK (DEMO)</label><input placeholder="Nhập dữ liệu…"></div>
+    <div class="group"><label>KEY (DEMO)</label><input placeholder="XXXX-XXXX-XXXX"></div>
 
     <button class="btn" id="start"><span class="scramble" data-text="START">START</span></button>
     <div id="msg"></div>
@@ -144,23 +113,20 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;background:rep
 
   <!-- TERMINAL -->
   <div class="panel" id="terminal" style="display:none">
-    <p class="subtitle">AUTO TERMINAL MODE — SIMULATION ONLY</p>
+    <p class="subtitle">AUTO TERMINAL MODE — SIMULATION</p>
     <div id="screen"></div>
     <button class="btn" id="back"><span>BACK TO HOME</span></button>
   </div>
 </div>
 
 <script>
-/* ================= SAFE CYBERPUNK UI DEMO (NO REAL ACTIONS) ================= */
-// NOTE: This is a VISUAL SIMULATION ONLY. No real network, no accounts, no actions.
-
-/* ================= AUDIO (SUBTLE GLITCH) ================= */
-let ctx;function beep(freq=900,dur=0.05,type='square'){try{if(!ctx) ctx=new (window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();const g=ctx.createGain();o.type=type;o.frequency.value=freq;g.gain.value=0.05;o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+dur)}catch(e){}}
+/* ================= AUDIO (SUBTLE) ================= */
+let ctx;function beep(freq=900,dur=0.05,type='square'){try{if(!ctx) ctx=new (window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();const g=ctx.createGain();o.type=type;o.frequency.value=freq;g.gain.value=0.04;o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+dur)}catch(e){}}
 function glitchSound(){[900,1200,700].forEach((f,i)=>setTimeout(()=>beep(f,0.04,'sawtooth'),i*70))}
 
-/* ================= FPS / SYSTEM METER ================= */
+/* ================= FPS METER ================= */
 const meter=document.createElement('div');Object.assign(meter.style,{position:'fixed',right:'10px',top:'10px',zIndex:9,fontFamily:"'Share Tech Mono'",fontSize:'12px',color:'#00ff9c',textShadow:'0 0 10px #00ff9c'});document.body.appendChild(meter);
-let last=performance.now(),frames=0,fps=0;function tick(t){frames++;if(t-last>=1000){fps=frames;frames=0;last=t}meter.textContent=`FPS:${fps} | SYSTEM LOAD:${Math.min(100,Math.floor(fps?1600/fps:90))}%`;requestAnimationFrame(tick)}requestAnimationFrame(tick);
+let last=performance.now(),frames=0,fps=0;function tick(t){frames++;if(t-last>=1000){fps=frames;frames=0;last=t}meter.textContent=`FPS:${fps} | LOAD:${Math.min(100,Math.floor(fps?1600/fps:90))}%`;requestAnimationFrame(tick)}requestAnimationFrame(tick);
 
 /* ================= MATRIX RAIN ================= */
 const c=document.getElementById('matrix'),x=c.getContext('2d');let w,h,cols,drops;
@@ -175,115 +141,30 @@ const txt='CHIẾN TRICKER';const el=document.getElementById('typing');let ti=0;
 const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 function scramble(el){let it=0;const orig=el.dataset.text;const iv=setInterval(()=>{el.textContent=orig.split('').map((c,idx)=>idx<it?c:letters[Math.random()*letters.length|0]).join('');if(it>=orig.length){clearInterval(iv);el.textContent=orig}it+=1/3;},28)}
 
-/* ================= TERMINAL SIMULATION — BATCH MODE (FAKE) ================= */
-// UI DEMO ONLY — NO REAL ACTIONS
+/* ================= TERMINAL SIMULATION (BATCH, FAKE) ================= */
+const home=document.getElementById('home');const term=document.getElementById('terminal');
+const screen=document.getElementById('screen');const msg=document.getElementById('msg');const btn=document.getElementById('start');
 
-const home = document.getElementById('home');
-const term = document.getElementById('terminal');
-const screen = document.getElementById('screen');
-const msg = document.getElementById('msg');
-const btn = document.getElementById('start');
-
-const IP_POOL = Array.from({length:200},()=>
-  `${Math.random()*255|0}.${Math.random()*255|0}.${Math.random()*255|0}.${Math.random()*255|0}`
-);
-const COOKIE_POOL = Array.from({length:200},(_,i)=>`COOKIE_${String(i+1).padStart(3,'0')}`);
-const UA_POOL = [
-  'Mozilla/5.0 (X11; Linux x86_64)',
-  'curl/8.4.0',
-  'python-requests/2.31.0',
-  'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
-];
-const ASN_POOL = ['AS13335','AS15169','AS16509','AS8075','AS4837'];
-
-const MAX_LINES = 700;
-let timer = null, cycle = 0, ip = 0, ck = 0;
-
-function log(text, cls='info'){
-  const d=document.createElement('div');
-  d.className='log '+cls;
-  d.textContent=text;
-  screen.appendChild(d);
-  while(screen.children.length>MAX_LINES) screen.removeChild(screen.firstChild);
-  screen.scrollTop=screen.scrollHeight;
-}
-
-function rnd(min,max){ return Math.floor(min+Math.random()*(max-min)); }
-
-function buildBatch(ipAddr,cookie){
-  return [
-    [`$ ip link set tun0 up mtu 1400`, 'ok'],
-    [`$ ip route replace default via ${ipAddr} dev tun0`, 'info'],
-    [`$ asn lookup ${ipAddr} -> ${ASN_POOL[Math.random()*ASN_POOL.length|0]}`, 'info'],
-    [`$ ua rotate --set=\"${UA_POOL[Math.random()*UA_POOL.length|0]}\"`, 'info'],
-    [`$ session load --cookie=${cookie}`, 'warn'],
-    [`$ pipeline stage=preflight status=OK`, 'ok'],
-    [`$ pipeline stage=handshake status=OK`, 'ok'],
-    [`$ pipeline stage=execute status=RUNNING`, 'warn']
-  ];
-}
-
-function terminalLoop(){
-  const delay = rnd(800,1000);
-  timer = setTimeout(()=>{
-    cycle++;
-    ip = (ip+1)%IP_POOL.length;
-    ck = (ck+1)%COOKIE_POOL.length;
-
-    const batch = buildBatch(IP_POOL[ip], COOKIE_POOL[ck]);
-    const lines = rnd(3,5);
-
-    for(let i=0;i<lines;i++){
-      const [t,c] = batch[(cycle+i)%batch.length];
-      log(t,c);
-    }
-
-    if(cycle % rnd(2,4) === 0){
-      log('$ processing…','info');
-      glitchSound();
-      timer = setTimeout(terminalLoop, rnd(2000,3000));
-    }else{
-      terminalLoop();
-    }
-  },delay);
-}
-
-/* START */
-btn.onclick = ()=>{
-  msg.style.color='var(--neon-y)';
-  msg.textContent='> TERMINAL ONLINE (SIMULATION)';
-  glitchSound();
-  setTimeout(()=>{
-    home.style.display='none';
-    term.style.display='block';
-    screen.innerHTML='';
-    cycle=ip=ck=0;
-    terminalLoop();
-  },600);
-};
-
-/* BACK */
-document.getElementById('back').onclick = ()=>{
-  clearTimeout(timer);
-  timer=null;
-  home.style.display='block';
-  term.style.display='none';
-  msg.textContent='';
-};
-
-// Pools are VISUAL ONLY
 const IP_POOL=Array.from({length:200},()=>`${Math.random()*255|0}.${Math.random()*255|0}.${Math.random()*255|0}.${Math.random()*255|0}`);
 const COOKIE_POOL=Array.from({length:200},(_,i)=>`COOKIE_${String(i+1).padStart(3,'0')}`);
+const UA_POOL=['Mozilla/5.0 (X11; Linux x86_64)','curl/8.4.0','python-requests/2.31.0','Mozilla/5.0 (Windows NT 10.0; Win64; x64)'];
+const ASN_POOL=['AS13335','AS15169','AS16509','AS8075','AS4837'];
 
-const MAX_LINES=600;let timer=null,cmd=0,ip=0,ck=0;
+const MAX_LINES=700;let timer=null,cycle=0,ip=0,ck=0;
 function log(text, cls='info'){const d=document.createElement('div');d.className='log '+cls;d.textContent=text;screen.appendChild(d);while(screen.children.length>MAX_LINES) screen.removeChild(screen.firstChild);screen.scrollTop=screen.scrollHeight}
 function rnd(min,max){return Math.floor(min+Math.random()*(max-min))}
-
-function loop(){const delay=rnd(800,1000);timer=setTimeout(()=>{cmd++;ip=(ip+1)%IP_POOL.length;ck=(ck+1)%COOKIE_POOL.length;log(`[IP] ${IP_POOL[ip]}`,'info');log(`[COOKIE] ${COOKIE_POOL[ck]}`,'warn');if(cmd%rnd(2,4)===0){log(`[SYSTEM] processing…`,'ok');glitchSound();timer=setTimeout(loop,rnd(2000,3000))}else{loop()}},delay)}
+function batch(ipAddr,cookie){return[
+  [`root@node-7:/opt/core# ip link set tun0 up mtu 1400`,'ok'],
+  [`root@node-7:/opt/core# ip route replace default via ${ipAddr}`,'info'],
+  [`root@node-7:/opt/core# asn lookup ${ipAddr} -> ${ASN_POOL[Math.random()*ASN_POOL.length|0]}`,'info'],
+  [`root@node-7:/opt/core# ua rotate --set="${UA_POOL[Math.random()*UA_POOL.length|0]}"`,'info'],
+  [`root@node-7:/opt/core# session load --cookie=${cookie}`,'warn'],
+  [`root@node-7:/opt/core# pipeline stage=execute status=RUNNING`,'warn']
+]}
+function loop(){const delay=rnd(800,1000);timer=setTimeout(()=>{cycle++;ip=(ip+1)%IP_POOL.length;ck=(ck+1)%COOKIE_POOL.length;const b=batch(IP_POOL[ip],COOKIE_POOL[ck]);const lines=rnd(3,5);for(let i=0;i<lines;i++){const [t,c]=b[(cycle+i)%b.length];log(t,c)}if(cycle%rnd(2,4)===0){log('root@node-7:/opt/core# processing…','info');glitchSound();timer=setTimeout(loop,rnd(2000,3000))}else{loop()}},delay)}
 
 btn.addEventListener('mouseenter',()=>scramble(btn.querySelector('.scramble')));
-btn.addEventListener('click',()=>{msg.style.color='var(--neon-y)';msg.textContent='> TERMINAL ONLINE (SIMULATION)';glitchSound();setTimeout(()=>{home.style.display='none';term.style.display='block';screen.innerHTML='';cmd=ip=ck=0;loop()},600)});
-
+btn.onclick=()=>{msg.style.color='var(--neon-y)';msg.textContent='> TERMINAL ONLINE (SIMULATION)';glitchSound();setTimeout(()=>{home.style.display='none';term.style.display='block';screen.innerHTML='';cycle=ip=ck=0;loop()},600)};
 document.getElementById('back').onclick=()=>{clearTimeout(timer);timer=null;home.style.display='block';term.style.display='none';msg.textContent=''};
 </script>
 </body>
