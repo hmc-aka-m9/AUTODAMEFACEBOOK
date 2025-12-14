@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CHIẾN TRICKER // </title>
+<title>CHIẾN TRICKER //  </title>
 <link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#00ff9c" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -123,19 +123,19 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;background:rep
   <!-- HOME -->
   <div class="panel" id="home">
     <h1 class="title glitch" data-text="CHIẾN TRICKER"><span class="typing cursor" id="typing">CHIẾN TRICKER</span></h1>
-    <p class="subtitle">HMCTricker / HACKER • 17 Tuổi</p>
+    <p class="subtitle">HMCTricker / HACKER  • 17 Tuổi</p>
 
     <div class="group">
       <label>TÊN FACEBOOK </label>
-      <input id="fbName" placeholder="Nhập dữ liệu…" />
+      <input id="fbName" placeholder="Nhập dữ liệu..." />
     </div>
     <div class="group">
       <label>ID FACEBOOK </label>
-      <input id="fbId" placeholder="Nhập dữ liệu…" />
+      <input id="fbId" placeholder="Nhập dữ liệu..." />
     </div>
     <div class="group">
       <label>KEY </label>
-      <input placeholder="Nhập dữ liệu…" />
+      <input placeholder="Nhập dữ liệu..." />
     </div>
 
     <button class="btn" id="start"><span class="scramble" data-text="START">START</span></button>
@@ -145,35 +145,25 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;background:rep
   <!-- TERMINAL -->
   <div class="panel" id="terminal" style="display:none">
     <p class="subtitle">Chiến Tricker — HACKER 17 Tuổi</p>
-    <div id="screen"></div> Trang chủ    <button class="btn" id="back"><span>spann</button>>  </div>
+    <div id="screen"></div>E N D<button class="btn" id="back"><span>spann</button>
+  </div>
 </div>
 
 <script>
-/* ================= VISUAL OVERDRIVE FX ================= */
-// overlays
-const flash=document.createElement('div');flash.id='flash';
-Object.assign(flash.style,{position:'fixed',inset:0,background:'#fff',opacity:0,pointerEvents:'none',transition:'opacity .15s'});
-document.body.appendChild(flash);
-const red=document.createElement('div');red.id='red';
-Object.assign(red.style,{position:'fixed',inset:0,background:'rgba(255,0,0,.35)',opacity:0,pointerEvents:'none',mixBlendMode:'screen'});
-document.body.appendChild(red);
-ument.body.appendChild(red);
+/* ================= SAFE CYBERPUNK UI DEMO (NO REAL ACTIONS) ================= */
+// NOTE: This is a VISUAL SIMULATION ONLY. No real network, no accounts, no actions.
 
-let flashLoop=null;
-function /* flash disabled */document.body.style.transform='scale(1)'}}
-
-// audio (WebAudio, no external files)
-let ctx;function beep(freq=900,dur=0.06,type='square'){if(!ctx) ctx=new (window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();const g=ctx.createGain();o.type=type;o.frequency.value=freq;g.gain.value=0.08;o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+dur)}
-function glitchSound(){[900,1200,600,1500].forEach((f,i)=>setTimeout(()=>beep(f,0.05,'sawtooth'),i*60))}
-function alarm(){for(let i=0;i<6;i++) setTimeout(()=>beep(440,0.12,'square'),i*180)}
+/* ================= AUDIO (SUBTLE GLITCH) ================= */
+let ctx;function beep(freq=900,dur=0.05,type='square'){try{if(!ctx) ctx=new (window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();const g=ctx.createGain();o.type=type;o.frequency.value=freq;g.gain.value=0.05;o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+dur)}catch(e){}}
+function glitchSound(){[900,1200,700].forEach((f,i)=>setTimeout(()=>beep(f,0.04,'sawtooth'),i*70))}
 
 /* ================= FPS / SYSTEM METER ================= */
-const meter=document.createElement('div');Object.assign(meter.style,{position:'fixed',right:'10px',top:'10px',zIndex:9,fontFamily:"'Share Tech Mono'",fontSize:'12px',color:'#0f0',textShadow:'0 0 10px #0f0'});document.body.appendChild(meter);
-let last=performance.now(),frames=0,fps=0;function tick(t){frames++;if(t-last>=1000){fps=frames;frames=0;last=t}meter.textContent=`FPS:${fps} | OVERLOAD:${Math.min(100,Math.floor(fps?2000/fps:99))}%`;requestAnimationFrame(tick)}requestAnimationFrame(tick);
+const meter=document.createElement('div');Object.assign(meter.style,{position:'fixed',right:'10px',top:'10px',zIndex:9,fontFamily:"'Share Tech Mono'",fontSize:'12px',color:'#00ff9c',textShadow:'0 0 10px #00ff9c'});document.body.appendChild(meter);
+let last=performance.now(),frames=0,fps=0;function tick(t){frames++;if(t-last>=1000){fps=frames;frames=0;last=t}meter.textContent=`FPS:${fps} | SYSTEM LOAD:${Math.min(100,Math.floor(fps?1600/fps:90))}%`;requestAnimationFrame(tick)}requestAnimationFrame(tick);
 
-/* ================= MATRIX RAIN (OPTIMIZED) ================= */
-const c=document.getElementById('matrix'),x=c.getContext('2d');
-let w,h,cols,drops;function resize(){w=c.width=innerWidth;h=c.height=innerHeight;cols=Math.floor(w/14);drops=Array(cols).fill(1)}window.onresize=resize;resize();
+/* ================= MATRIX RAIN ================= */
+const c=document.getElementById('matrix'),x=c.getContext('2d');let w,h,cols,drops;
+function resize(){w=c.width=innerWidth;h=c.height=innerHeight;cols=Math.floor(w/14);drops=Array(cols).fill(1)}window.addEventListener('resize',resize);resize();
 const chars='01アカサタナハマヤラワABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*';
 setInterval(()=>{x.fillStyle='rgba(0,0,0,0.06)';x.fillRect(0,0,w,h);for(let i=0;i<drops.length;i++){const t=chars[Math.random()*chars.length|0];x.fillStyle=`hsl(${120+Math.random()*160},100%,60%)`;x.fillText(t,i*14,drops[i]*14);drops[i]=(drops[i]*14>h&&Math.random()>0.985)?0:drops[i]+1}},45);
 
@@ -182,48 +172,26 @@ const txt='CHIẾN TRICKER';const el=document.getElementById('typing');let ti=0;
 
 /* ================= SCRAMBLE ================= */
 const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-function scramble(el){let it=0;const orig=el.dataset.text;const iv=setInterval(()=>{el.textContent=orig.split('').map((c,idx)=>idx<it?c:letters[Math.random()*letters.length|0]).join('');if(it>=orig.length){clearInterval(iv);el.te
-/* ================= TERMINAL DEMO (HIGH VOLUME, NO FLICKER) ================= */
-const home=document.getElementById('home');const term=document.getElementById('terminal');const screen=document.getElementById('screen');
-const msg=document.getElementById('msg');const btn=document.getElementById('start');
+function scramble(el){let it=0;const orig=el.dataset.text;const iv=setInterval(()=>{el.textContent=orig.split('').map((c,idx)=>idx<it?c:letters[Math.random()*letters.length|0]).join('');if(it>=orig.length){clearInterval(iv);el.textContent=orig}it+=1/3;},28)}
 
+/* ================= TERMINAL SIMULATION (SLOW + RANDOM) ================= */
+const home=document.getElementById('home');const term=document.getElementById('terminal');
+const screen=document.getElementById('screen');const msg=document.getElementById('msg');const btn=document.getElementById('start');
+
+// Pools are VISUAL ONLY
 const IP_POOL=Array.from({length:200},()=>`${Math.random()*255|0}.${Math.random()*255|0}.${Math.random()*255|0}.${Math.random()*255|0}`);
-const COOKIE_POOL=Array.from({length:200},(_,i)=>`SESSION_${i+1}`);
-const MAX_LINES=600,BATCH_SIZE=6,TICK_MS=40;
-function logBatch(lines){const frag=document.createDocumentFragment();lines.forEach(([t,c])=>{const d=document.createElement('div');d.className='log '+c;d.textContent=t;frag.appendChild(d)});screen.appendChild(frag);while(screen.children.length>MAX_LINES) screen.removeChild(screen.firstChild);screen.scrollTop=screen.scrollHeight}
+const COOKIE_POOL=Array.from({length:200},(_,i)=>`COOKIE_${String(i+1).padStart(3,'0')}`);
+
+const MAX_LINES=600;let timer=null,cmd=0,ip=0,ck=0;
+function log(text, cls='info'){const d=document.createElement('div');d.className='log '+cls;d.textContent=text;screen.appendChild(d);while(screen.children.length>MAX_LINES) screen.removeChild(screen.firstChild);screen.scrollTop=screen.scrollHeight}
+function rnd(min,max){return Math.floor(min+Math.random()*(max-min))}
+
+function loop(){const delay=rnd(800,1000);timer=setTimeout(()=>{cmd++;ip=(ip+1)%IP_POOL.length;ck=(ck+1)%COOKIE_POOL.length;log(`[IP] ${IP_POOL[ip]}`,'info');log(`[COOKIE] ${COOKIE_POOL[ck]}`,'warn');if(cmd%rnd(2,4)===0){log(`[SYSTEM] processing…`,'ok');glitchSound();timer=setTimeout(loop,rnd(2000,3000))}else{loop()}},delay)}
 
 btn.addEventListener('mouseenter',()=>scramble(btn.querySelector('.scramble')));
-btn.addEventListener('click',()=>{
-  msg.style.color='var(--neon-y)';msg.textContent='> KHỞI ĐỘNG TERMINAL & OVERDRIVE…';
-  glitchSound();
-  startFlashLoop();
-  setTimeout(()=>{
-    home.style.display='none';term.style.display='block';screen.innerHTML='';
-    const name=fbName.value||'UNKNOWN';const id=fbId.value||'000000';
-    // INFINITE LOOP MODE (NO SUCCESS)
-    const total=1000+Math.floor(Math.random()*1001); // used only for display pacing
-    let done=0,ipIdx=0,cookieIdx=0;
-    // store interval globally to stop on BACK
-    window.__iv && clearInterval(window.__iv);
-    zoomJitter(true); redAlert(true);
-    window.__iv=setInterval(()=>{
-      const batch=[];
-      for(let k=0;k<BATCH_SIZE;k++){
-        done=(done%total)+1; // loop counter forever
-        ipIdx=(ipIdx+1)%IP_POOL.length; cookieIdx=(cookieIdx+1)%COOKIE_POOL.length;
-        batch.push([`[IP SWITCH] ${IP_POOL[ipIdx]}`,'info']);
-        batch.push([`[COOKIE] ${COOKIE_POOL[cookieIdx]}`,'info']);
-        batch.push([`[REPORT] ${done}/${total} → ${name} (${id})`,'warn']);
-      }
-      logBatch(batch);
-    },TICK_MS);
-  },700);
-});
+btn.addEventListener('click',()=>{msg.style.color='var(--neon-y)';msg.textContent='> TERMINAL ONLINE (SIMULATION)';glitchSound();setTimeout(()=>{home.style.display='none';term.style.display='block';screen.innerHTML='';cmd=ip=ck=0;loop()},600)});
 
-docu='> Đang '> D=()  stopFlashLoop();
-  redAlert(false); zoomJitter(false);
-  window.__iv && clearInterval(window.__iv); window.__iv=null;
-  stopFlashLoop();home.style.display='block';term.style.display='none';msg.textContent='';redAlert(false);zoomJitter(false)};
+document.getElementById('back').onclick=()=>{clearTimeout(timer);timer=null;home.style.display='block';term.style.display='none';msg.textContent=''};
 </script>
 </body>
 </html>
