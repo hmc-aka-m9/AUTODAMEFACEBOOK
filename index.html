@@ -175,9 +175,101 @@ const txt='CHIẾN TRICKER';const el=document.getElementById('typing');let ti=0;
 const letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 function scramble(el){let it=0;const orig=el.dataset.text;const iv=setInterval(()=>{el.textContent=orig.split('').map((c,idx)=>idx<it?c:letters[Math.random()*letters.length|0]).join('');if(it>=orig.length){clearInterval(iv);el.textContent=orig}it+=1/3;},28)}
 
-/* ================= TERMINAL SIMULATION (SLOW + RANDOM) ================= */
-const home=document.getElementById('home');const term=document.getElementById('terminal');
-const screen=document.getElementById('screen');const msg=document.getElementById('msg');const btn=document.getElementById('start');
+/* ================= TERMINAL SIMULATION — BATCH MODE (FAKE) ================= */
+// UI DEMO ONLY — NO REAL ACTIONS
+
+const home = document.getElementById('home');
+const term = document.getElementById('terminal');
+const screen = document.getElementById('screen');
+const msg = document.getElementById('msg');
+const btn = document.getElementById('start');
+
+const IP_POOL = Array.from({length:200},()=>
+  `${Math.random()*255|0}.${Math.random()*255|0}.${Math.random()*255|0}.${Math.random()*255|0}`
+);
+const COOKIE_POOL = Array.from({length:200},(_,i)=>`COOKIE_${String(i+1).padStart(3,'0')}`);
+const UA_POOL = [
+  'Mozilla/5.0 (X11; Linux x86_64)',
+  'curl/8.4.0',
+  'python-requests/2.31.0',
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+];
+const ASN_POOL = ['AS13335','AS15169','AS16509','AS8075','AS4837'];
+
+const MAX_LINES = 700;
+let timer = null, cycle = 0, ip = 0, ck = 0;
+
+function log(text, cls='info'){
+  const d=document.createElement('div');
+  d.className='log '+cls;
+  d.textContent=text;
+  screen.appendChild(d);
+  while(screen.children.length>MAX_LINES) screen.removeChild(screen.firstChild);
+  screen.scrollTop=screen.scrollHeight;
+}
+
+function rnd(min,max){ return Math.floor(min+Math.random()*(max-min)); }
+
+function buildBatch(ipAddr,cookie){
+  return [
+    [`$ ip link set tun0 up mtu 1400`, 'ok'],
+    [`$ ip route replace default via ${ipAddr} dev tun0`, 'info'],
+    [`$ asn lookup ${ipAddr} -> ${ASN_POOL[Math.random()*ASN_POOL.length|0]}`, 'info'],
+    [`$ ua rotate --set=\"${UA_POOL[Math.random()*UA_POOL.length|0]}\"`, 'info'],
+    [`$ session load --cookie=${cookie}`, 'warn'],
+    [`$ pipeline stage=preflight status=OK`, 'ok'],
+    [`$ pipeline stage=handshake status=OK`, 'ok'],
+    [`$ pipeline stage=execute status=RUNNING`, 'warn']
+  ];
+}
+
+function terminalLoop(){
+  const delay = rnd(800,1000);
+  timer = setTimeout(()=>{
+    cycle++;
+    ip = (ip+1)%IP_POOL.length;
+    ck = (ck+1)%COOKIE_POOL.length;
+
+    const batch = buildBatch(IP_POOL[ip], COOKIE_POOL[ck]);
+    const lines = rnd(3,5);
+
+    for(let i=0;i<lines;i++){
+      const [t,c] = batch[(cycle+i)%batch.length];
+      log(t,c);
+    }
+
+    if(cycle % rnd(2,4) === 0){
+      log('$ processing…','info');
+      glitchSound();
+      timer = setTimeout(terminalLoop, rnd(2000,3000));
+    }else{
+      terminalLoop();
+    }
+  },delay);
+}
+
+/* START */
+btn.onclick = ()=>{
+  msg.style.color='var(--neon-y)';
+  msg.textContent='> TERMINAL ONLINE (SIMULATION)';
+  glitchSound();
+  setTimeout(()=>{
+    home.style.display='none';
+    term.style.display='block';
+    screen.innerHTML='';
+    cycle=ip=ck=0;
+    terminalLoop();
+  },600);
+};
+
+/* BACK */
+document.getElementById('back').onclick = ()=>{
+  clearTimeout(timer);
+  timer=null;
+  home.style.display='block';
+  term.style.display='none';
+  msg.textContent='';
+};
 
 // Pools are VISUAL ONLY
 const IP_POOL=Array.from({length:200},()=>`${Math.random()*255|0}.${Math.random()*255|0}.${Math.random()*255|0}.${Math.random()*255|0}`);
